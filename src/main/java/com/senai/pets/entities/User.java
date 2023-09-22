@@ -1,7 +1,5 @@
 package com.senai.pets.entities;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,5 +17,7 @@ public class User {
     private String phone;
     @Enumerated(EnumType.STRING)
     private UserStatus status;
-    private LocalDate date;
+
+    @OneToOne(optional=true)
+    private Address address;
 }
