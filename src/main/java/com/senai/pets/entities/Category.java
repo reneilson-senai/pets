@@ -10,14 +10,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
-public class Address {
+public class Category {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String street;
-    private String number;
-    private String state;
-    private String city;
-    private String cep;
-    private String district;
-    private String complement;
+    private String name;
 }
