@@ -15,6 +15,7 @@ public class User {
     private String lastName;
     private String password;
     private String phone;
+    
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 

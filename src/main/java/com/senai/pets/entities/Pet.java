@@ -28,10 +28,10 @@ public class Pet {
     @ManyToOne
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     private Order order;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Administrator createdBy;
 
     @ManyToMany
