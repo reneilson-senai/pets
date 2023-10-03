@@ -16,17 +16,17 @@ public class PetService {
 
     @Transactional
     public Pet create(Pet pet){
-        return repository.save(pet);
+        Pet petCriado = repository.save(pet);
+        return petCriado;
+    }
+
+    public Pet read(Long id){
+        return repository.findById(id).get();
     }
 
     public List<Pet> list(){
-        return (List<Pet>) repository.findAll();
-    }
-
-    @Transactional
-    public Pet update(Long id, Pet pet){
-        pet.setId(id);
-        return repository.save(pet);
+        List<Pet> pets = (List<Pet>) repository.findAll();
+        return pets;
     }
 
     @Transactional
@@ -34,10 +34,12 @@ public class PetService {
         repository.deleteById(id);
     }
 
-    public Pet read(Long id){
-        if(repository.existsById(id)){
-            return repository.findById(id).get();
+    @Transactional
+    public Pet update(Pet pet){
+        if(repository.existsById(pet.getId())){
+            return repository.save(pet);
+        }else{
+            return null;
         }
-        return null;
     }
 }

@@ -36,4 +36,6 @@ public class Pet {
 
     @ManyToMany
     private List<Tag> tags;
+
+    private Boolean isActive = true;
 }
