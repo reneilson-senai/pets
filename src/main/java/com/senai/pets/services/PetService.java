@@ -25,7 +25,7 @@ public class PetService {
     }
 
     public List<Pet> list(){
-        List<Pet> pets = (List<Pet>) repository.findAll();
+        List<Pet> pets = repository.findAll();
         return pets;
     }
 
