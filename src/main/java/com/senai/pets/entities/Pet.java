@@ -2,6 +2,8 @@ package com.senai.pets.entities;
 
 import java.util.List;
 
+import com.senai.pets.dtos.PetInputDTO;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -17,6 +19,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Pet {
+    public Pet(PetInputDTO dto) {
+        this.name = dto.getName();
+        this.status = dto.getStatus();
+    }
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     

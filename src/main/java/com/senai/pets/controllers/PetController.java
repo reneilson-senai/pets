@@ -3,8 +3,10 @@ package com.senai.pets.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.senai.pets.dtos.PetInputDTO;
+import com.senai.pets.dtos.PetOutputDTO;
 import com.senai.pets.entities.Pet;
 import com.senai.pets.services.PetService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/pets")
@@ -24,32 +30,32 @@ public class PetController {
     private PetService service;
 
     @PostMapping
-    public ResponseEntity<Pet> post(@RequestBody Pet pet){
-        Pet petCriada = service.create(pet);
-        return new ResponseEntity<Pet>(petCriada, HttpStatus.CREATED);
+    public ResponseEntity<PetOutputDTO> post(@RequestBody @Valid PetInputDTO pet) {
+        PetOutputDTO petCriada = service.create(pet);
+        return new ResponseEntity<PetOutputDTO>(petCriada, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Pet> put(@RequestBody Pet pet){
-        Pet petAtualizada = service.update(pet);
+    public ResponseEntity<PetOutputDTO> put(@RequestBody PetInputDTO pet) {
+        PetOutputDTO petAtualizada = service.update(pet);
         return ResponseEntity.ok(petAtualizada);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Long id){
+    public ResponseEntity delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping
-    public ResponseEntity<List<Pet>> getList(){
-        List<Pet> lista = service.list();
+    public ResponseEntity<List<PetOutputDTO>> getList(Pageable page) {
+        List<PetOutputDTO> lista = service.list(page);
         return ResponseEntity.ok(lista);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pet> getRead(@PathVariable Long id){
-        Pet petEncontrada = service.read(id);
+    public ResponseEntity<PetOutputDTO> getRead(@PathVariable Long id) {
+        PetOutputDTO petEncontrada = service.read(id);
         return ResponseEntity.ok(petEncontrada);
     }
 }

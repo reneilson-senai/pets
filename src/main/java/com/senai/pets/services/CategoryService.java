@@ -34,7 +34,11 @@ public class CategoryService {
         return repository.findById(id).get();
     }
 
-    public List<Category> list(){
-        return repository.findAll();
+    public List<Category> list(String name){
+        if(name != null){
+            return repository.findByName(name);
+        }else{
+            return repository.findAll();
+        }
     }
 }

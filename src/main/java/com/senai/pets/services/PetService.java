@@ -1,11 +1,15 @@
 package com.senai.pets.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.senai.pets.dtos.PetInputDTO;
+import com.senai.pets.dtos.PetOutputDTO;
 import com.senai.pets.entities.Pet;
 import com.senai.pets.repositories.PetRepository;
 
@@ -15,18 +19,33 @@ public class PetService {
     private PetRepository repository;
 
     @Transactional
-    public Pet create(Pet pet){
-        Pet petCriado = repository.save(pet);
-        return petCriado;
+    public PetOutputDTO create(PetInputDTO dto){
+        Pet petCriado = repository.save(converterDtoParaEntidade(dto));
+        return converterEntidadeParaDTO(petCriado);
     }
 
-    public Pet read(Long id){
-        return repository.findById(id).get();
+    public PetOutputDTO converterEntidadeParaDTO(Pet pet){
+        PetOutputDTO dtoSaida = new PetOutputDTO();
+        dtoSaida.setId(pet.getId());
+        dtoSaida.setName(pet.getName());
+        dtoSaida.setStatus(pet.getStatus());
+        return dtoSaida;
     }
 
-    public List<Pet> list(){
-        List<Pet> pets = repository.findAll();
-        return pets;
+    public Pet converterDtoParaEntidade(PetInputDTO dto){
+        Pet pet = new Pet();
+        pet.setName(dto.getName());
+        pet.setStatus(dto.getStatus());
+        return pet;
+    }
+
+    public PetOutputDTO read(Long id){
+        Pet pet = repository.findById(id).get();
+        return converterEntidadeParaDTO(pet);
+    }
+
+    public List<PetOutputDTO> list(Pageable page){
+        return repository.findAll(page).stream().map(p->converterEntidadeParaDTO(p)).toList();
     }
 
     @Transactional
@@ -35,11 +54,16 @@ public class PetService {
     }
 
     @Transactional
-    public Pet update(Pet pet){
+    public PetOutputDTO update(PetInputDTO pet){
+        if(pet.getId() == null){
+            pet.setId(99l);
+        }
         if(repository.existsById(pet.getId())){
-            return repository.save(pet);
+            Pet petAtualizado = repository.save(converterDtoParaEntidade(pet));
+            return converterEntidadeParaDTO(petAtualizado);
         }else{
             return null;
         }
+
     }
 }

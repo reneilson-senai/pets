@@ -3,6 +3,7 @@ package com.senai.pets.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,8 +25,8 @@ public class OrderService {
         return repository.findById(id).get();
     }
 
-    public List<Order> list(){
-        List<Order> orders = (List<Order>) repository.findAll();
+    public List<Order> list(Pageable page){
+        List<Order> orders = (List<Order>) repository.findAll(page);
         return orders;
     }
 
