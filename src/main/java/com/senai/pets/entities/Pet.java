@@ -38,7 +38,7 @@ public class Pet {
     @ManyToOne(optional = true)
     private Order order;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private Administrator createdBy;
 
     @ManyToMany
