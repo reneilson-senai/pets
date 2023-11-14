@@ -3,7 +3,6 @@ package com.senai.pets.advice;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
