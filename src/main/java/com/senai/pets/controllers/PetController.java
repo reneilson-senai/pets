@@ -24,7 +24,7 @@ import com.senai.pets.services.PetService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/pets")
+@RequestMapping("pets")
 public class PetController {
     @Autowired
     private PetService service;
