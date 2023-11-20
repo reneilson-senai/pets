@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.senai.pets.dtos.PetInputDTO;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -40,6 +41,9 @@ public class Pet {
 
     @ManyToOne(optional = true)
     private User createdBy;
+
+    @Embedded
+    private FileInfo foto;
 
     @ManyToMany
     private List<Tag> tags;
