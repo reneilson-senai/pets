@@ -11,4 +11,5 @@ public class PetOutputDTO {
     private Long id;
     private String name;
     private Status status;
+    private String username;
 }

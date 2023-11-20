@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.senai.pets.dtos.PetInputDTO;
 import com.senai.pets.dtos.PetOutputDTO;
 import com.senai.pets.entities.Pet;
+import com.senai.pets.entities.User;
 import com.senai.pets.repositories.PetRepository;
 
 @Service
@@ -19,8 +20,10 @@ public class PetService {
     private PetRepository repository;
 
     @Transactional
-    public PetOutputDTO create(PetInputDTO dto){
-        Pet petCriado = repository.save(converterDtoParaEntidade(dto));
+    public PetOutputDTO create(PetInputDTO dto, User usuario){
+        Pet petTemporario = converterDtoParaEntidade(dto);
+        petTemporario.setCreatedBy(usuario);
+        Pet petCriado = repository.save(petTemporario);
         return converterEntidadeParaDTO(petCriado);
     }
 
@@ -29,6 +32,7 @@ public class PetService {
         dtoSaida.setId(pet.getId());
         dtoSaida.setName(pet.getName());
         dtoSaida.setStatus(pet.getStatus());
+        dtoSaida.setUsername(pet.getCreatedBy().getUsername());
         return dtoSaida;
     }
 

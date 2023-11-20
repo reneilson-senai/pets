@@ -39,7 +39,7 @@ public class Pet {
     private Order order;
 
     @ManyToOne(optional = true)
-    private Administrator createdBy;
+    private User createdBy;
 
     @ManyToMany
     private List<Tag> tags;
